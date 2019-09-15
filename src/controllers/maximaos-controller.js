@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
-const Maximaos = mongoose.model('Maximaos');
+const { validationResult } = require('express-validator');
+
+const repository = require('../repositories/maximaos-repository');
+
 
 // list
 exports.listMaximaos = async (req, res) => 
 {
   try 
   {
-    const data = await Maximaos.find({});
+    const data = await repository.listMaximaos();
     res.status(200).send(data);
   } 
   catch (e) 
@@ -19,20 +21,23 @@ exports.listMaximaos = async (req, res) =>
 // create
 exports.createMaximaos = async (req, res) => 
 {
+  const {errors} = validationResult(req);
+  
+  if(errors.length > 0) {
+    return res.status(400).send({message: errors});
+  }
+
   try 
   {
-        const maximaos = new Maximaos(
+        await repository.createMaximaos(
         {
-          Nome: req.body.nome,
+          nome: req.body.nome,
           geo_latitude: req.body.geo_latitude,
           geo_longitude: req.body.geo_longitude,
           endereco: req.body.endereco,
-          Motivo: req.body.motivo
+          motivo: req.body.motivo
         });
 
-         console.log(maximaos)
-
-        await maximaos.save();
 
         res.status(201).send({message: 'Visita cadastrada com sucesso!'});
   } 
@@ -40,5 +45,38 @@ exports.createMaximaos = async (req, res) =>
           {
             res.status(500).send({message: 'Falha ao cadastrar a visita.'});
           }
+  
+};
+
+//update
+
+exports.updateMaximaos = async (req, res) => {
+  const {errors} = validationResult(req);
+
+  if(errors.length > 0) {
+    return res.status(400).send({message: errors});}
+  
+
+  try {
+    await repository.updateMaximaos(req.params.id, req.body);
+    return res.status(200).send({
+      message: 'Visita atualizada com sucesso!'
+    });
+  } catch (e) {
+    return res.status(500).send({message: 'Falha ao atualizar a visita.'});
+  }
+  
+};
+
+// delete
+exports.deleteMaxiamos= async (req, res) => {
+  try {
+    await repository.deleteMaximaos(req.params.id);
+    res.status(200).send({
+      message: 'Visita removida com sucesso!'
+    });
+  } catch (e) {
+    res.status(500).send({message: 'Falha ao remover a Visita.'});
+  }
   
 };

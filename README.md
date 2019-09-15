@@ -1,5 +1,10 @@
 # maxima_os
-Sistema logistica visitas tecnicas.
+
+Sistema para logisticas de visitas tecnicas, utilizando
+api google maps, express, nodejs, mongodb.
+
+
+
 
 
 

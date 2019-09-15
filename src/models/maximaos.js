@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 
 const schema = new Schema({
-    Nome:{
+    nome:{
         type:String,
         required:true,
         trim: true
@@ -20,7 +20,7 @@ const schema = new Schema({
         type:String,
         required:true,
     },
-    Motivo:{
+    motivo:{
         type:String,
         required:true,
     }
