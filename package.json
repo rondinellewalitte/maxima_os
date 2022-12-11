@@ -19,7 +19,7 @@
   "homepage": "https://github.com/rondinellewalitte/maxima_os#readme",
   "dependencies": {
     "debug": "^4.1.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-validator": "^6.2.0",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.1"
